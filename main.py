@@ -1,19 +1,3 @@
-# import pyttsx3                              # Speaking librery call
-# import datetime as dt                       # date and time definition librery call
-#
-# engine = pyttsx3.init()                     # object creation
-# engine.setProperty('rate', 125)             # setting voice rate
-# en_voice_id = 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0'         # english voice id
-# engine.setProperty('voice', en_voice_id)    # schoice english voice acting
-#
-# data = dt.date.today()                      # determine the day
-# time = dt.datetime.now()                    # determine the time
-#
-# engine.say(f"Today is the {data.day}th day of the {data.month}th month of {data.year}"
-#            f", it is now {time.hour} hour {time.minute} minutes {time.second} seconds.")                 # pronounce the date and time in full
-# engine.runAndWait()                         # start pronounce
-
-
 # Голосовой ассистент Френк 1.0 BETA | Voice assistent FRANK 1.0 BETA
 import os
 import time
@@ -24,7 +8,7 @@ import datetime
 
 # Настройки | Settings
 opts = {
-    "name": ('Фрэнк', 'Френк', 'франк', 'фк', 'фрэн', 'фран', 'фрак', 'франк', 'frank', 'пранк'),
+    "name": ('Фрэнк', 'Френк', 'франк', 'фк', 'фрэн', 'фран', 'фрак', 'франк', 'frank', 'пранк', 'да', 'даа'),
     # Activate the bot | Активировать бота
     "call": ('скажи', 'расскажи', 'покажи', 'сколько', 'произнести'),  # Auxiliary words | Вспомогательные слова
     "cmds": {  # Bot commands | Команды бота
@@ -46,7 +30,6 @@ def speak(what):
     speak_engine.runAndWait()
     speak_engine.stop()
 
-
 def callback(recognizer, audio):
     try:
         voice = recognizer.recognize_google(audio, language="ru-RU").lower()
@@ -66,9 +49,10 @@ def callback(recognizer, audio):
             cmd = recognize_cmd(cmd)
             execute_cmd(cmd['cmd'])
 
+
     except sr.UnknownValueError:
         print("[log] Команда не расспознана!")
-    except sr.RequestError as e:
+    except sr.RequestError:
         print("[log] Связь прервана! Пожалуйста проверьте ваш интернет!")
 
 
@@ -89,10 +73,7 @@ def execute_cmd(cmd):
     if cmd == 'ctime':
         # Cказать текущее время | Tell the current time
         now = datetime.datetime.now()
-
-    # speak("Сейчас " + str(now.hour) + ":" + str(now.minute))
-    # stop_listening = r.listen_in_background(m, callback)
-    # while True: time.sleep(0.1) # infinity loop
+        speak("Сейчас " + str(now.hour) + ":" + str(now.minute))
 
     elif cmd == 'radio':
         # Воспроизвести радио | Turn on music
@@ -102,8 +83,6 @@ def execute_cmd(cmd):
     elif cmd == 'stupid1':
         # Not understanding words | Не понимаюющие слова
         speak("Пока что, я не умею шутить. Но вскором времени мой разработчик научит меня шутить как человек")
-        stop_listening = r.listen_in_background(m, callback)
-        while True: time.sleep(0.01)  # infinity loop
 
     elif cmd == 'info':
         speak("Меня зовут Френк")
@@ -138,8 +117,9 @@ speak_engine = pyttsx3.init()
 
 #  cmd test
 # speak("Мой разработчик не научил меня анекдотам ... Ха ха ха")
-speak("Здравствуйте мой повелитель")
-speak("Френк вас слушает...")
+# speak("Здравствуйте мой повелитель")
+# speak("Френк вас слушает...")
 
 stop_listening = r.listen_in_background(m, callback)
-while True: time.sleep(0.1)  # infinity loop
+while True:
+    time.sleep(0.1)  # infinity loop
